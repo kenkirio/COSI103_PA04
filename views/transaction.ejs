@@ -1,0 +1,85 @@
+<h1> Transactions for <%= user.username %> </h1>
+
+<p> Here is a table of your transactions. </p>
+
+<table>
+	<tr>
+		<td>
+			<a class="btn btn-lg btn-primary" href="/transaction/byCategory">
+				group by category
+			</a>
+		</td>
+		<td>
+			<a class="btn btn-lg btn-primary" href="?sortBy=category">
+				sort by category
+			</a>
+		</td>
+		<td>
+			<a class="btn btn-lg btn-primary" href="?sortBy=amount">
+				sort by amount
+			</a>
+		</td>
+		<td>
+			<a class="btn btn-lg btn-primary" href="?sortBy=description">
+				sort by description
+			</a>
+		</td>
+		<td>
+			<a class="btn btn-lg btn-primary" href="?sortBy=date">
+				sort by date
+			</a>
+		</td>
+	</tr>
+</table>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>description</th>
+            <th>amount</th>
+            <th>category</th>
+            <th>date</th>
+			<th>delete</th>
+			<th>edit</th>
+        </tr>
+    </thead>
+	<tbody>
+		<% transactions.forEach(transaction => { %>
+		<tr>
+			<td><%= transaction.description %></td>
+			<td><%= transaction.amount %></td>
+			<td><%= transaction.category %></td>
+			<td><%= transaction.date.toDateString() %></td>
+			<td>
+				<a href="/transaction/delete/<%=transaction._id%>">
+					<i class="bi bi-trash"></i>
+				</a>
+			</td>
+			<td>
+				<a href="/transaction/edit/<%=transaction._id%>">
+                  <i class="bi bi-pencil-square"></i>
+              	</a>
+			</td>
+		</tr>
+		<% }); %>
+	</tbody>
+</table>
+
+<h1> Add a New Transaction </h1>
+
+<form action="/transaction/create" method="POST">
+    <label for="description">Description:</label>
+    <input type="text" id="description" name="description" required>
+    <br>
+    <label for="category">Category:</label>
+    <input type="text" id="category" name="category" required>
+    <br>
+    <label for="amount">Amount:</label>
+    <input type="number" id="amount" name="amount" step="0.01" required>
+    <br>
+    <label for="date">Date:</label>
+    <input type="date" id="date" name="date" required>
+    <br>
+
+    <bubble><input type="submit" value="store"></bubble>
+</form>
